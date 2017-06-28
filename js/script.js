@@ -4,7 +4,7 @@
 
 const DEFAULT_SNAKE_SPEED = 10;
 const DEFAULT_SNAKE_X_POSITION = 0;
-const DEFAULT_SNAKE_Y_POSITION = 500;
+const DEFAULT_SNAKE_Y_POSITION = 0;
 const DEFAULT_SNAKE_RADIUS = 20;
 
 const ORIENTATION_LEFT = 1;
@@ -25,9 +25,7 @@ function Snake(color, name, size){
     this.speed = DEFAULT_SNAKE_SPEED;
     this.orientation = ORIENTATION_RIGHT;
     this.status = SNAKE_STATUS_ALIVE;
-    this.xPosition = DEFAULT_SNAKE_X_POSITION;
-    this.yPosition = DEFAULT_SNAKE_Y_POSITION;
-    this.body = [[]];
+    this.body = [[DEFAULT_SNAKE_X_POSITION,DEFAULT_SNAKE_Y_POSITION]];
     /***
      * Neu an phai Bom thi chet. Neu an food thi song,
      * tang kich thuoc, tang diem. KHONG tang toc do.
@@ -99,7 +97,7 @@ function Snake(color, name, size){
         var ctx = document.getElementById("myCanvas").getContext("2d");
         ctx.clearRect(0, 0, 800, 500);
         ctx.beginPath();
-        ctx.arc(this.xPosition + DEFAULT_SNAKE_RADIUS, this.yPosition - DEFAULT_SNAKE_RADIUS, DEFAULT_SNAKE_RADIUS, 0, 2 * Math.PI);
+        ctx.arc(this.xPosition + DEFAULT_SNAKE_RADIUS, this.yPosition + DEFAULT_SNAKE_RADIUS, DEFAULT_SNAKE_RADIUS, 0, 2 * Math.PI);
         ctx.fillStyle = this.color;
         ctx.fill();
     }
