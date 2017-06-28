@@ -2,10 +2,10 @@
  * Created by nhatnk on 6/26/17.
  */
 
-const DEFAULT_SNACK_SPEED = 10;
-const DEFAULT_SNACK_X_POSITION = 0;
-const DEFAULT_SNACK_Y_POSITION = 0;
-const DEFAULT_SNACK_RADIUS = 20;
+const DEFAULT_SNAKE_SPEED = 10;
+const DEFAULT_SNAKE_X_POSITION = 0;
+const DEFAULT_SNAKE_Y_POSITION = 500;
+const DEFAULT_SNAKE_RADIUS = 20;
 
 const ORIENTATION_LEFT = 1;
 const ORIENTATION_RIGHT = 2;
@@ -22,12 +22,12 @@ function Snake(color, name, size){
     this.color = color;
     this.name = name;
     this.size = size;
-    this.speed = DEFAULT_SNACK_SPEED;
+    this.speed = DEFAULT_SNAKE_SPEED;
     this.orientation = ORIENTATION_RIGHT;
     this.status = SNAKE_STATUS_ALIVE;
-    this.xPosition = DEFAULT_SNACK_X_POSITION;
-    this.yPosition = DEFAULT_SNACK_Y_POSITION;
-
+    this.xPosition = DEFAULT_SNAKE_X_POSITION;
+    this.yPosition = DEFAULT_SNAKE_Y_POSITION;
+    this.body = [[]];
     /***
      * Neu an phai Bom thi chet. Neu an food thi song,
      * tang kich thuoc, tang diem. KHONG tang toc do.
@@ -48,18 +48,34 @@ function Snake(color, name, size){
     this.move = function () {
         switch (this.orientation){
             case ORIENTATION_RIGHT:
-                this.xPosition += this.speed;
+                this.moveRight();
                 break;
             case ORIENTATION_LEFT:
-                this.xPosition -= this.speed;
+                this.moveLeft();
                 break;
             case ORIENTATION_DOWN:
-                this.yPosition += this.speed;
+                this.moveDown();
                 break;
             case ORIENTATION_UP:
-                this.yPosition -= this.speed;
+                this.moveUp();
                 break;
         }
+    };
+
+    this.moveLeft = function(){
+        this.xPosition -= this.speed;
+    };
+
+    this.moveRight = function(){
+        this.xPosition += this.speed;
+    };
+
+    this.moveUp = function(){
+        this.yPosition -= this.speed;
+    };
+
+    this.moveDown = function(){
+        this.yPosition += this.speed;
     };
 
     /***
@@ -83,8 +99,8 @@ function Snake(color, name, size){
         var ctx = document.getElementById("myCanvas").getContext("2d");
         ctx.clearRect(0, 0, 800, 500);
         ctx.beginPath();
-        ctx.arc(this.xPosition + DEFAULT_SNACK_RADIUS, this.yPosition + DEFAULT_SNACK_RADIUS, DEFAULT_SNACK_RADIUS, 0, 2 * Math.PI);
-        ctx.fillStyle = '#ff0000';
+        ctx.arc(this.xPosition + DEFAULT_SNAKE_RADIUS, this.yPosition - DEFAULT_SNAKE_RADIUS, DEFAULT_SNAKE_RADIUS, 0, 2 * Math.PI);
+        ctx.fillStyle = this.color;
         ctx.fill();
     }
 }
@@ -120,4 +136,5 @@ function controlSnake(event){
     if(event.which === 37){
         snake.orientation = ORIENTATION_LEFT;
     }
+
 }
